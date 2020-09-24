@@ -1,0 +1,28 @@
+
+FOOD FOR ALL TASK FEATURE
+This feature allows admins to:
+Create tasks
+Respond back and forth with volunteers on a profile-like page.
+Update tasks.
+
+It allows volunteers to:
+View a list of tasks.
+Correspond back and forth with the admin.
+
+
+Technologies used:
+PHP 7.3
+MySQL 5.8 (PDO extension).
+
+Programming style:
+Since I had no idea what tools other developers would be using, and I wanted to avoid clashing with WordPress, I avoided Object Oriented programming. Thus this feature was built using procedural programming.
+When I am more familiar with WordPress's own classes and functions, I will rewrite the code using OOP for better readerbility and maintanance.
+
+
+I am waiting for Rob Edwards to okay a demo version before I commit the code. The demo can be viewed at:
+ffatasks.epizy.com/tasks
+The credential "jon snow" will log you in as an admin.
+"elaida" will log you in as a volunteer.
+
+Questions?
+Slack and tawacodes@gmail.com.
