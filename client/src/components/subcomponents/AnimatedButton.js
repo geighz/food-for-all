@@ -1,10 +1,10 @@
 import React from 'react';
 
-const AnimatedButton = () =>{
+const AnimatedButton = ({message}) =>{
   return(
   <div>
     <div className="ui animated button">
-      <div className="visible content">Tasks</div>
+      <div className="visible content">{message}</div>
         <div className="hidden content">
           <i className="right arrow icon"></i>
         </div>
