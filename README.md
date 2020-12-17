@@ -1,4 +1,4 @@
-
+Master Branch is strictly for client functionality only, until a stand alone component is made, Master will typically be in an older state.
 
 ## Available Scripts
 
