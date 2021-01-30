@@ -110,7 +110,7 @@ class Actions extends React.Component{
 
     // INSERT USER
     insertUser = (user_name,user_email,user_password,user_type) => {
-          Axios.post('http://localhost/food/register.php',{
+          Axios.post('http://localhost/food/insert-user2.php',{
               user_name:user_name,
               user_email:user_email,
               user_password:user_password,
