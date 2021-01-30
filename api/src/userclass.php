@@ -5,12 +5,12 @@ class user
 {
 //class properties. These are the properties (variables) used throughout our class
 public $name;
+public $type;
 public $email;
 public $password;
-public $type;
 
 //function to register users, IE insert the details of new users to our database
-function register ($name, $type,  $email, $password)
+function register ($name, $type, $email, $password)
 {
 require "config.php";
 
