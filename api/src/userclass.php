@@ -17,7 +17,7 @@ require "config.php";
 //prepare statements to insert users to the db.
 $reg = $conn->prepare("INSERT INTO users (username, type, email, password)
 VALUES (:name, :type, :email, :password)");
-
+//
 //assign properties that will give fields their data
 $reg->bindParam(":name", $name);
 $reg->bindParam(":type", $type);

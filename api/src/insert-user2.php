@@ -25,6 +25,7 @@ if(isset($data->user_name)
 		$passwordHash = password_hash($userpassword, PASSWORD_DEFAULT);
 		$usertype = mysqli_real_escape_string($db_conn, trim($data->user_type));
 
+//note, password has been hashed
     if (filter_var($useremail, FILTER_VALIDATE_EMAIL)) {
 			$userInput = new user();
 			$userInput->register($username, $usertype, $useremail, $passwordHash);
