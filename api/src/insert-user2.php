@@ -27,7 +27,7 @@ if(isset($data->user_name)
 
     if (filter_var($useremail, FILTER_VALIDATE_EMAIL)) {
 			$userInput = new user();
-			$userInput->register($username,$useremail,$userpassword,$usertype);
+			$userInput->register($username,$usertype,$useremail,$userpassword);
 
 			/*$stmt = mysqli_prepare($db_conn,"INSERT INTO users(user_name,user_email,user_password,user_type) VALUES (?,?,?,?)");
 			mysqli_stmt_bind_param($stmt, "ssss",
