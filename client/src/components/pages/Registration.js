@@ -1,14 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
+import {AppContext} from '../../context';
+
 import DropdownList from 'react-widgets/lib/DropdownList'
 import 'react-widgets/dist/css/react-widgets.css';
+import axios from 'axios';
 
 const types = [ { type: 'Single Volunteer or Volunteer Group', value: '1' },
-{ type: 'Hub', value: '2' } ]
+{ type: 'Client or Client Group in Need', value: '2' } ]
 
 
 class Registration extends React.Component {
+  static contextType = AppContext;
 
   renderError({error, touched}){
     if (touched && error){
@@ -44,8 +48,14 @@ class Registration extends React.Component {
     );
   }
 
-  onSubmit(formValues){
-    console.log(formValues);
+  onSubmit = (formValues) =>{
+    //console.log(formValues);
+    console.log(formValues.username)
+    console.log(formValues.email)
+    console.log(formValues.password)
+    console.log(formValues.type.type)
+
+    this.context.insertUser(formValues.username,formValues.email,formValues.password,formValues.type.type);
   }
 
   render(){
@@ -92,6 +102,11 @@ const validate = (formValues) =>{
 
   return error;
 };
+
+//export default Registration;
+//Potentially using redux.
+//Due to Tawanda's expertise being stronger in Php, I will be using Php as the
+//End Point.
 
 export default reduxForm({
   form: 'Registration',

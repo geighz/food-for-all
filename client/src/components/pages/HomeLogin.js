@@ -5,6 +5,7 @@ import '../../css/HomeLogin.css';
 import { Field, reduxForm } from 'redux-form';
 import AnimatedButton from '../subcomponents/AnimatedButton.js';
 
+
 class HomeLogin extends React.Component{
   renderError({error, touched}){
     if (touched && error){
@@ -68,6 +69,9 @@ onSubmit(formValues){
   };
 
 
+  //Potentially using redux. export default HomeLogin;
+  //Due to Tawanda's expertise being stronger in Php, I will be using Php as the
+  //End Point.
 export default reduxForm({
   form: 'HomeLogin',
   validate: validate

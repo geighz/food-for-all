@@ -1,5 +1,9 @@
-import streams from '../apis/streams';
-import {SIGN_IN, SIGN_OUT} from './types';
+import connections from '../apis/streams';
+import {
+  SIGN_IN,
+  SIGN_OUT,
+  REGISTER
+} from './types';
 
 export const signIn = (userId) => {
    return {
@@ -14,6 +18,10 @@ export const signOut = () => {
   };
 };
 
-export const createStream = formValues => async disptach => {
-  streams.post('/streams', formValues);
+export const register = formValues => async (dispatch, getState) => {
+
+  const { userId } = getState().auth;
+  const response = await streams.post('/connections', {...formValues, userId});
+
+  dispatch({type: REGISTER, payload: response.data});
 };

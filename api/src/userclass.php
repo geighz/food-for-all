@@ -25,7 +25,8 @@ $reg->bindParam(":email", $email);
 $reg->bindParam(":password", $password);
 
 //execute statements
-$reg->execute();
+return $reg->execute();
+
 }
 
 //method to delete users
