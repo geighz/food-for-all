@@ -4,25 +4,58 @@
 class user
 {
 //class properties. These are the properties (variables) used throughout our class
-public $name;
-public $type;
-public $email;
-public $password;
+
+private $name;
+      public function setName($name){
+         $this->name = $name;
+      }
+      public function getName(){
+         return $this->name;
+      }
+
+private $type;
+      public function setUserType($type){
+         $this->type = $type;
+      }
+      public function getUserType(){
+         return $this->type;
+      }
+
+private $email;
+      public function setEmail($email){
+         $this->email = $email;
+      }
+      public function getEmail(){
+         return $this->email;
+      }
+
+private $password;
+      public function setPassword($password){
+         $this->password = $password;
+      }
+      public function getPassword(){
+         return $this->password;
+      }
+
 
 //function to register users, IE insert the details of new users to our database
 function register ($name, $type, $email, $password)
 {
 require "config.php";
+$this->setName($name);
+$this->setEmail($email);
+$this->setUserType($type);
+$this->setPassword($password);
 
 //prepare statements to insert users to the db.
 $reg = $conn->prepare("INSERT INTO users (username, type, email, password)
 VALUES (:name, :type, :email, :password)");
 //
 //assign properties that will give fields their data
-$reg->bindParam(":name", $name);
-$reg->bindParam(":type", $type);
-$reg->bindParam(":email", $email);
-$reg->bindParam(":password", $password);
+$reg->bindParam(":name", $this->getName());
+$reg->bindParam(":type", $this->getUserType());
+$reg->bindParam(":email", $this->getEmail());
+$reg->bindParam(":password", $this->getPassword());
 
 //execute statements
 return $reg->execute();
