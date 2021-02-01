@@ -5,6 +5,14 @@ class user
 {
 //class properties. These are the properties (variables) used throughout our class
 
+private $id;
+      public function setId($id){
+         $this->id = $id;
+      }
+      public function getId(){
+         return $this->id;
+      }
+
 private $name;
       public function setName($name){
          $this->name = $name;
@@ -47,10 +55,20 @@ $this->setEmail($email);
 $this->setUserType($type);
 $this->setPassword($password);
 
+//check if the inserted email already exists in the database
+$permit = $conn->prepare("SELECT * FROM users WHERE email = :email");
+$permit->bindParam(":email", $this->getEmail());
+$permit->execute();
+$obj = $permit->fetchObject();
+
+//check if email exists, display error message, otherwise if it does not exist, insert the user's details into our database
+if ($email = $obj->email) {
+echo "Oops. It looks like you already have an account with us";
+}
+else {
 //prepare statements to insert users to the db.
 $reg = $conn->prepare("INSERT INTO users (username, type, email, password)
 VALUES (:name, :type, :email, :password)");
-//
 //assign properties that will give fields their data
 $reg->bindParam(":name", $this->getName());
 $reg->bindParam(":type", $this->getUserType());
@@ -59,53 +77,40 @@ $reg->bindParam(":password", $this->getPassword());
 
 //execute statements
 return $reg->execute();
-
 }
 
-//method to delete users
-function delete($user)
-{
-require "config.php";
+//the execute function returns "boolean true"
+//$reg returns the query without the values
+//therefore I asume although I haven't tested the following:
+/* if($reg->execute()) {
+Send the user to login page
+}
+else {
+display some kind of error
+}*/
 
-//prepare. We use the email field, since it is the most unique field particular to each user that is already in our session
-$del = $conn->prepare("DELETE FROM users WHERE email = :email");
-
-//assign a value to :email
-$del->bindParam(":email", $user);
-$del->execute();
 }
 
 //login
-function login($email) {
+//please note the following is still under development
+//We only check the email here and the password during instantiation because for some reason, having the password_verify function in this method seems to mess the process
+/*function login($email) {
 require "config.php";
+$this->setEmail($email);
 
 //search for records corresponding to the user's credentials
-$permit = $conn->prepare("SELECT * FROM users WHERE email = :email OR username = :email");
-
+$permit = $conn->prepare("SELECT * FROM users WHERE email = :email");
 //assign  values  to the placeholder above
-$permit->bindParam(":email", $email);
-
-//execute
+$permit->bindParam(":email", $this->getEmail());
 $permit->execute();
 
-//Fetch password from database to be compared with a user's entered password. Also assign session variables at this point
 $obj = $permit->fetchObject();
-$_SESSION['id'] = $obj->id;
-$_SESSION['username'] = $obj->username;
-$_SESSION['mail'] = $obj->email;
-$_SESSION['type'] = $obj->type;
-$this->password = $obj->password;
-}
+$this->setId = $obj->id;
+$this->setName = $obj->username;
+$this->setType = $obj->type;
+$this->setEmail = $obj->email;
+$this->setPassword = $obj->password;
+}*/
 
-//reset password
-public function reset($email, $password) {
-require "config.php";
-
-$update = $conn->prepare("UPDATE users SET password = :password WHERE email = :email");
-
-$update->bindParam(":email", $email);
-$update->bindParam(":password", $password);
-
-$update->execute();
-}
+//end of class
 }
