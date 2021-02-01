@@ -3,16 +3,8 @@
 //class to handle users
 class user
 {
+
 //class properties. These are the properties (variables) used throughout our class
-
-private $id;
-      public function setId($id){
-         $this->id = $id;
-      }
-      public function getId(){
-         return $this->id;
-      }
-
 private $name;
       public function setName($name){
          $this->name = $name;
@@ -50,6 +42,7 @@ private $password;
 function register ($name, $type, $email, $password)
 {
 require "config.php";
+//set properties
 $this->setName($name);
 $this->setEmail($email);
 $this->setUserType($type);
@@ -79,7 +72,7 @@ $reg->bindParam(":password", $this->getPassword());
 return $reg->execute();
 }
 
-//the execute function returns "boolean true"
+//the $reg->execute function returns "boolean true"
 //$reg returns the query without the values
 //therefore I asume although I haven't tested the following:
 /* if($reg->execute()) {
@@ -88,29 +81,34 @@ Send the user to login page
 else {
 display some kind of error
 }*/
-
 }
 
-//login
-//please note the following is still under development
-//We only check the email here and the password during instantiation because for some reason, having the password_verify function in this method seems to mess the process
-/*function login($email) {
+//login method
+function login($email, $password) {
 require "config.php";
 $this->setEmail($email);
+$this->setPassword($password);
 
-//search for records corresponding to the user's credentials
+//search for the entered email address
 $permit = $conn->prepare("SELECT * FROM users WHERE email = :email");
-//assign  values  to the placeholder above
-$permit->bindParam(":email", $this->getEmail());
+$mail = $this->getEmail();
+$permit->bindParam(":email", $mail);
 $permit->execute();
-
 $obj = $permit->fetchObject();
-$this->setId = $obj->id;
-$this->setName = $obj->username;
-$this->setType = $obj->type;
-$this->setEmail = $obj->email;
-$this->setPassword = $obj->password;
-}*/
+
+//check if the password entered by the user corresponds to the password in the database
+if (password_verify($this->getPassword(), $obj->password)) {
+//if passwords match, it is safe to log the user in, therefore sessions can be set at this point
+$_SESSION['id'] = $obj->id;
+$_SESSION['username'] = $obj->username;
+$_SESSION['email'] = $obj->email;
+$_SESSION['type'] = $obj->type;
+}
+else {
+echo "Error logging you in. Please try again. If you continue experiencing difficulties, please contact webmaster. <a href = 'pseudologin.php'> Sign in</a>";
+}
+}
+
 
 //end of class
 }
