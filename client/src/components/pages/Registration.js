@@ -50,12 +50,17 @@ class Registration extends React.Component {
 
   onSubmit = (formValues) =>{
     //console.log(formValues);
-    console.log(formValues.username)
-    console.log(formValues.email)
-    console.log(formValues.password)
-    console.log(formValues.type.type)
+    console.log(formValues.username);
+    console.log(formValues.email);
+    console.log(formValues.password);
+    console.log(formValues.type.type);
+    console.log(formValues.passwordCheck);
 
-    this.context.insertUser(formValues.username,formValues.email,formValues.password,formValues.type.type);
+    this.context.insertUser(formValues.username,
+      formValues.email,
+      formValues.password,
+      formValues.type.type,
+      formValues.passwordCheck);
   }
 
   render(){

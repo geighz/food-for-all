@@ -14,44 +14,34 @@ if(isset($data->user_name)
 	&& isset($data->user_email)
 	&& isset($data->user_password)
 	&& isset($data->user_type)
+	&& isset($data->password_check)
 	&& !empty(trim($data->user_name))
 	&& !empty(trim($data->user_email))
 	&& !empty(trim($data->user_password))
 	&& !empty(trim($data->user_type))
+	&& !empty(trim($data->password_check))
 	){
     $username = mysqli_real_escape_string($db_conn, trim($data->user_name));
     $useremail = mysqli_real_escape_string($db_conn, trim($data->user_email));
 		$userpassword = mysqli_real_escape_string($db_conn, trim($data->user_password));
 		$passwordHash = password_hash($userpassword, PASSWORD_DEFAULT);
 		$usertype = mysqli_real_escape_string($db_conn, trim($data->user_type));
+		$passCheck = mysqli_real_escape_string($db_conn, trim($data->password_check));
 
 //note, password has been hashed
-    if (filter_var($useremail, FILTER_VALIDATE_EMAIL)) {
+
+    if ((filter_var($useremail, FILTER_VALIDATE_EMAIL)) && ($passCheck == $userpassword)) {
+
 			$userInput = new user();
-			$userInput->register($username, $usertype, $useremail, $passwordHash);
+			$result = $userInput->register($username, $usertype, $useremail, $passwordHash);
 
-			/*$stmt = mysqli_prepare($db_conn,"INSERT INTO users(user_name,user_email,user_password,user_type) VALUES (?,?,?,?)");
-			mysqli_stmt_bind_param($stmt, "ssss",
-			$username,
-			$useremail,
-			$passwordHash,
-			$usertype);
-
-			$result = mysqli_stmt_execute($stmt);
-			*/
-			/*
-        $insertUser = mysqli_query($db_conn,
-				"INSERT INTO `users`(`user_name`,`user_email`)
-				VALUES('$username','$useremail')");
-
-				*/
-
+				echo var_dump($result);
         if($result){
-            $last_id = mysqli_insert_id($db_conn);
-            echo json_encode(["success"=>1,"msg"=>"User Inserted.","id"=>$last_id]);
+            //$last_id = mysqli_insert_id($db_conn);
+            echo json_encode(["success"=>1,"msg"=>"User Inserted."]);
         }
         else{
-            echo json_encode(["success"=>0,"msg"=>"User Not Inserted!".$stmt]);
+            echo json_encode(["success"=>0,"msg"=>"User Not Inserted!"]);
         }
     }
     else{

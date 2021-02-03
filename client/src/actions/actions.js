@@ -109,18 +109,24 @@ class Actions extends React.Component{
     }
 
     // INSERT USER
-    insertUser = (user_name,user_email,user_password,user_type) => {
+    insertUser = (user_name,user_email,user_password,user_type,password_check) => {
           Axios.post('http://localhost/food/insert-user2.php',{
               user_name:user_name,
               user_email:user_email,
               user_password:user_password,
-              user_type:user_type
+              user_type:user_type,
+              password_check:password_check
           })
           .then(function ({data}) {
               if(data.success === 1){
                   this.setState({
                       users:[
-                          {"id":data.id,"user_name":user_name,"user_email":user_email,"user_password":user_password,"user_type":user_type},
+                          {"id":data.id,
+                            "user_name":user_name,
+                            "user_email":user_email,
+                            "user_password":user_password,
+                            "user_type":user_type,
+                            "password_check":password_check},
                           ...this.state.users
                       ]
                   });
