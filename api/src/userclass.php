@@ -75,6 +75,7 @@ $reg->bindParam(":password", $password);
 
 //execute statements
 return $reg->execute();
+
 }
 
 //the $reg->execute function returns "boolean true"

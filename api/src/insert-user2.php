@@ -38,14 +38,8 @@ if(isset($data->user_name)
 
 			$userInput = new user();
 			$result = $userInput->register($username, $usertype, $useremail, $passwordHash);
+      echo json_encode(["success"=>1,"msg"=>"User Inserted."]);
 
-        if($result){
-            //$last_id = mysqli_insert_id($db_conn);
-            echo json_encode(["success"=>1,"msg"=>"User Inserted."]);
-        }
-        else{
-            echo json_encode(["success"=>0,"msg"=>"User Not Inserted!"]);
-        }
     }
     else{
         echo json_encode(["success"=>0,"msg"=>"Invalid Email Address!"]);
