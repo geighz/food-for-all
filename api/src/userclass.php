@@ -74,8 +74,9 @@ $reg->bindParam(":email", $emailCheck);
 $reg->bindParam(":password", $password);
 
 //execute statements
-return $reg->execute();
+//return $reg->execute();
 
+$reg->execute();
 }
 
 //the $reg->execute function returns "boolean true"
