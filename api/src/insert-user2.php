@@ -39,7 +39,7 @@ if(isset($data->user_name)
 			$userInput = new user();
 			$result = $userInput->register($username, $usertype, $useremail, $passwordHash);
       echo json_encode(["success"=>1,"msg"=>"User Inserted."]);
-
+			echo "HELLO! INSERT USER 2";
     }
     else{
         echo json_encode(["success"=>0,"msg"=>"Invalid Email Address!"]);
