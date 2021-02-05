@@ -8,6 +8,10 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 require 'db_connection.php';
 require 'userclass.php';
 // POST DATA
+
+//$contents = file_get_contents("php://input");
+//$contents = utf8_encode($contents);
+//$data = json_decode($contents);
 $data = json_decode(file_get_contents("php://input"));
 
 if(isset($data->user_name)
@@ -29,13 +33,12 @@ if(isset($data->user_name)
 		$passCheck = mysqli_real_escape_string($db_conn, trim($data->password_check));
 
 //note, password has been hashed
-
-    if ((filter_var($useremail, FILTER_VALIDATE_EMAIL)) && ($passCheck == $userpassword)) {
+//filter_var($useremail, FILTER_VALIDATE_EMAIL)) && (
+    if ($passCheck == $userpassword) {
 
 			$userInput = new user();
 			$result = $userInput->register($username, $usertype, $useremail, $passwordHash);
 
-				echo var_dump($result);
         if($result){
             //$last_id = mysqli_insert_id($db_conn);
             echo json_encode(["success"=>1,"msg"=>"User Inserted."]);

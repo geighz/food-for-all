@@ -49,13 +49,14 @@ $this->setUserType($type);
 $this->setPassword($password);
 
 //check if the inserted email already exists in the database
+$emailCheck = $this->getEmail();
 $permit = $conn->prepare("SELECT * FROM users WHERE email = :email");
-$permit->bindParam(":email", $this->getEmail());
+$permit->bindParam(":email", $emailCheck);
 $permit->execute();
 $obj = $permit->fetchObject();
 
 //check if email exists, display error message, otherwise if it does not exist, insert the user's details into our database
-if ($email = $obj->email) {
+if ($email == $obj->email) {
 echo "Oops. It looks like you already have an account with us";
 }
 else {
@@ -63,10 +64,14 @@ else {
 $reg = $conn->prepare("INSERT INTO users (username, type, email, password)
 VALUES (:name, :type, :email, :password)");
 //assign properties that will give fields their data
-$reg->bindParam(":name", $this->getName());
-$reg->bindParam(":type", $this->getUserType());
-$reg->bindParam(":email", $this->getEmail());
-$reg->bindParam(":password", $this->getPassword());
+//$name1 = $this->getName();
+//$type1 = $this->getUserType();
+//$pass1 = $this->getPassword();
+
+$reg->bindParam(":name", $name);
+$reg->bindParam(":type", $type);
+$reg->bindParam(":email", $emailCheck);
+$reg->bindParam(":password", $password);
 
 //execute statements
 return $reg->execute();
