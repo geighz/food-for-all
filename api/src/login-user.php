@@ -8,7 +8,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 require 'db_connection.php';
 require 'userclass.php';
 
-$data = json_decode(file_get_contents("php://input"));
+$data = json_decode(file_get_contents("php://input"),true);
 
 if(isset($data->user_email)
 	&& isset($data->user_password)
@@ -20,7 +20,7 @@ if(isset($data->user_email)
 
 			$userInput = new user();
 			$result = $userInput->login($useremail, $userpassword);
-      
+      echo var_dump($useremail);
       if($result){
       echo json_encode(["success"=>1,"msg"=>"User Logged In."]);
       }
@@ -29,5 +29,6 @@ if(isset($data->user_email)
     }
 }
 else{
+		echo json_encode(["success"=>0,"msg"=>$data]);
     echo json_encode(["success"=>0,"msg"=>"Please fill all the required fields!"]);
 }

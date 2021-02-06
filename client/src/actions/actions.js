@@ -119,8 +119,8 @@ class Actions extends React.Component{
                   this.setState({
                       users:[
                           {"id":data.id,
-                            "user_email":user_email,
-                            "user_password":user_password
+                            "user_email":"hEmail.@email.com",
+                            "user_password":"123"
                             },
                           ...this.state.users
                       ]

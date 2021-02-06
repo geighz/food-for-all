@@ -9,6 +9,8 @@ import AnimatedButton from '../subcomponents/AnimatedButton.js';
 
 
 class HomeLogin extends React.Component{
+  static contextType = AppContext;
+
   renderError({error, touched}){
     if (touched && error){
       return(
@@ -29,12 +31,9 @@ class HomeLogin extends React.Component{
       </div>
     );
   }
-onSubmit(formValues){
+onSubmit = (formValues) =>{
   //Send to login action
-  this.context.loginUser(    
-    formValues.email,
-    formValues.password,
-  );
+  this.context.loginUser(formValues.email,formValues.password);
 }
   render(){
     return(
