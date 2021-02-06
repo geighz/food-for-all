@@ -5,13 +5,15 @@ header("Access-Control-Allow-Methods: POST");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-require 'db_connection.php';
-require 'userclass.php';
+require 'config.php';
+
 // POST DATA
 
 //$contents = file_get_contents("php://input");
 //$contents = utf8_encode($contents);
 //$data = json_decode($contents);
+print_r($_POST);
+
 $data = json_decode(file_get_contents("php://input"));
 
 if(isset($data->user_name)
@@ -25,12 +27,21 @@ if(isset($data->user_name)
 	&& !empty(trim($data->user_type))
 	&& !empty(trim($data->password_check))
 	){
-    $username = mysqli_real_escape_string($db_conn, trim($data->user_name));
-    $useremail = mysqli_real_escape_string($db_conn, trim($data->user_email));
-		$userpassword = mysqli_real_escape_string($db_conn, trim($data->user_password));
+    //$username = mysqli_real_escape_string($db_conn, trim($data->user_name));
+    //$useremail = mysqli_real_escape_string($db_conn, trim($data->user_email));
+		//$userpassword = mysqli_real_escape_string($db_conn, trim($data->user_password));
+		//$passwordHash = password_hash($userpassword, PASSWORD_DEFAULT);
+		//$usertype = mysqli_real_escape_string($db_conn, trim($data->user_type));
+		//$passCheck = mysqli_real_escape_string($db_conn, trim($data->password_check));
+
+
+		$username = $data->user_name;
+		$useremail = $data->user_email;
+		$userpassword = $data->user_password;
 		$passwordHash = password_hash($userpassword, PASSWORD_DEFAULT);
-		$usertype = mysqli_real_escape_string($db_conn, trim($data->user_type));
-		$passCheck = mysqli_real_escape_string($db_conn, trim($data->password_check));
+		$usertype = $data->user_type;
+		$passCheck = $data->password_check;
+
 
 //note, password has been hashed
 //filter_var($useremail, FILTER_VALIDATE_EMAIL)) && (
