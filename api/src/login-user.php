@@ -5,18 +5,23 @@ header("Access-Control-Allow-Methods: POST");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-require 'db_connection.php';
-require 'userclass.php';
+//require 'db_connection.php';
+require 'config.php';
 
-$data = json_decode(file_get_contents("php://input"),true);
+print_r($_POST);
+$email = htmlspecialchars($_POST['user_name']);
+$password = htmlspecialchars($_POST['user_password']);
 
+$data = json_decode(file_get_contents("php://input"));
+
+echo $data->user_email;
 if(isset($data->user_email)
 	&& isset($data->user_password)
 	&& !empty(trim($data->user_email))
 	&& !empty(trim($data->user_password))
 	){
-    $useremail = mysqli_real_escape_string($db_conn, trim($data->user_email));
-		$userpassword = mysqli_real_escape_string($db_conn, trim($data->user_password));
+    //$useremail = mysqli_real_escape_string($db_conn, trim($data->user_email));
+		//$userpassword = mysqli_real_escape_string($db_conn, trim($data->user_password));
 
 			$userInput = new user();
 			$result = $userInput->login($useremail, $userpassword);
@@ -29,6 +34,6 @@ if(isset($data->user_email)
     }
 }
 else{
-		echo json_encode(["success"=>0,"msg"=>$data]);
+		echo json_encode(["success"=>0,"msg"=>$email]);
     echo json_encode(["success"=>0,"msg"=>"Please fill all the required fields!"]);
 }
