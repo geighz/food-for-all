@@ -20,6 +20,7 @@ class Actions extends React.Component{
         })
     }
 
+
      // ON EDIT MODE
      editMode = (id) => {
         let users = this.state.users.map(user => {
@@ -107,6 +108,32 @@ class Actions extends React.Component{
             console.log(error);
         });
     }
+    //Login user
+    loginUser = (user_email,user_password) => {
+          Axios.post('http://localhost/food/login-user.php',{
+              user_email:user_email,
+              user_password:user_password
+          })
+          .then(function ({data}) {
+              if(data.success === 1){
+                  this.setState({
+                      users:[
+                          {"id":data.id,
+                            "user_email":user_email,
+                            "user_password":user_password
+                            },
+                          ...this.state.users
+                      ]
+                  });
+              }
+              else{
+                  alert(data.msg);
+              }
+          }.bind(this))
+          .catch(function (error) {
+              console.log(error);
+          });
+      }
 
     // INSERT USER
     insertUser = (user_name,user_email,user_password,user_type,password_check) => {

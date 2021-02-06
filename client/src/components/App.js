@@ -16,7 +16,8 @@ import Actions from '../actions/actions';
 class App extends Actions{
   render(){
     const contextValue = {
-        insertUser:this.insertUser
+        insertUser:this.insertUser,
+        loginUser:this.loginUser
     }
     return(
       <Provider value={contextValue}>

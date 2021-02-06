@@ -1,8 +1,10 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../../css/HomeLogin.css';
+import {AppContext} from '../../context';
 import { Field, reduxForm } from 'redux-form';
+
+import '../../css/HomeLogin.css';
 import AnimatedButton from '../subcomponents/AnimatedButton.js';
 
 
@@ -28,7 +30,11 @@ class HomeLogin extends React.Component{
     );
   }
 onSubmit(formValues){
-  console.log(formValues);
+  //Send to login action
+  this.context.loginUser(    
+    formValues.email,
+    formValues.password,
+  );
 }
   render(){
     return(
@@ -37,9 +43,8 @@ onSubmit(formValues){
           Welcome to the Food For All UK work space.
           <div className="sub header">Please Log in Below.</div>
         </h1>
-
         <form onSubmit={this.props.handleSubmit(this.onSubmit)} className = "ui form error">
-          <Field name="username" component={this.renderInput} label="Enter Username"/>
+          <Field name="email" component={this.renderInput} label="Enter Email"/>
           <Field name="password" component={this.renderInput} label = "Enter Password"/>
           <button className="ui button primary"> Submit</button>
         </form>
@@ -56,9 +61,9 @@ onSubmit(formValues){
 
   const validate = (formValues) =>{
     const error = {};
-    if (!formValues.username) {
+    if (!formValues.email) {
       // only ran if the user did not enter a Username.
-      error.username = 'Username field is missing.';
+      error.username = 'Email field is missing.';
     }
 
     if(!formValues.password){
