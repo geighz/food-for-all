@@ -9,7 +9,7 @@ require 'config.php';
 
 // POST DATA
 $data = json_decode(file_get_contents("php://input"));
-
+echo var_dump($data);
 if(isset($data->user_name)
 	&& isset($data->user_email)
 	&& isset($data->user_password)

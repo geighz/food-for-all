@@ -119,8 +119,8 @@ class Actions extends React.Component{
                   this.setState({
                       users:[
                           {"id":data.id,
-                            "user_email":"hEmail.@email.com",
-                            "user_password":"123"
+                            "user_email":user_email,
+                            "user_password":user_password
                             },
                           ...this.state.users
                       ]
@@ -135,7 +135,33 @@ class Actions extends React.Component{
           });
       }
 
-    // INSERT USER
+    // INSERT USER Test
+    /*
+    insertUser = (user_name,user_email,user_password,user_type,password_check) => {
+      Axios.post('http://localhost/food/insert-userTest.php',{
+              user_name:user_name,
+              user_email:user_email
+          })
+          .then(function ({data}) {
+              if(data.success === 1){
+                  this.setState({
+                      users:[
+                          {"id":data.id,"user_name":user_name,"user_email":user_email},
+                          ...this.state.users
+                      ]
+                  });
+              }
+              else{
+                  alert(data.msg);
+              }
+          }.bind(this))
+          .catch(function (error) {
+              console.log(error);
+          });
+      }
+  }
+  */
+
     insertUser = (user_name,user_email,user_password,user_type,password_check) => {
           Axios.post('http://localhost/food/insert-user2.php',{
               user_name:user_name,
@@ -167,5 +193,6 @@ class Actions extends React.Component{
           });
       }
   }
+
 
   export default Actions;
