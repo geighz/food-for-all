@@ -56,7 +56,7 @@ $permit->execute();
 $obj = $permit->fetchObject();
 
 //check if email exists, display error message, otherwise if it does not exist, insert the user's details into our database
-if ($email == $obj->email) {
+if ($obj) {
 echo "Oops. It looks like you already have an account with us";
 }
 else {
@@ -103,6 +103,7 @@ $permit->bindParam(":email", $mail);
 $permit->execute();
 $obj = $permit->fetchObject();
 
+if ($obj) {
 //check if the password entered by the user corresponds to the password in the database
 if (password_verify($this->getPassword(), $obj->password)) {
 //if passwords match, it is safe to log the user in, therefore sessions can be set at this point
@@ -114,8 +115,10 @@ $_SESSION['type'] = $obj->type;
 else {
 echo "Error logging you in. Please try again. If you continue experiencing difficulties, please contact webmaster. <a href = 'pseudologin.php'> Sign in</a>";
 }
+else {
+echo "Error. Contact webmaster";
 }
-
+}
 
 //end of class
 }
