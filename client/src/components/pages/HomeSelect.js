@@ -1,3 +1,5 @@
+//<button onClick={logoutUser}>Logout</button>
+//{theUser.username}
 import React, {useContext} from 'react';
 import {UserContext} from '../../contexts/UserContext';
 
@@ -14,12 +16,35 @@ function HomeSelect(){
     if(isAuth)
     {
         return(
-            <div className="userInfo">
-                <div className="_img"><span role="img" aria-label="User Image">👦</span></div>
-                <h1>{theUser.name}</h1>
-                <div className="_email"><span>{theUser.email}</span></div>
-                <div className="_email"><span>{theUser.username}</span></div>
-                <button onClick={logoutUser}>Logout</button>
+            <div className="ui container">
+                <div className = "ui secondary pointing menu">
+                  <a class="item">
+                    Home
+                  </a>
+                  <a class="item">
+                    Shifts
+                  </a>
+                  <a class="item">
+                    Positions
+                  </a>
+                </div>
+                <div className = "ui centered header">{theUser.username}</div>
+                <div class="ui segment">
+                <div class="ui two column very relaxed grid">
+                  <div class="column">
+                    <div className = "ui header">Left Header</div>
+                    <p>Left1</p>
+                    <p>Left2</p>
+                  </div>
+                  <div class="column">
+                    <div className = "ui header">Right Header</div>
+                    <p>Right1</p>
+                    <p>Right2</p>
+                  </div>
+                </div>
+                <div class="ui vertical divider">
+                </div>
+              </div>
             </div>
         )
     }
