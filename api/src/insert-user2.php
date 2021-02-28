@@ -12,7 +12,7 @@ require 'config.php';
 //$contents = file_get_contents("php://input");
 //$contents = utf8_encode($contents);
 //$data = json_decode($contents);
-print_r($_POST);
+
 
 $data = json_decode(file_get_contents("php://input"));
 
@@ -34,7 +34,7 @@ if(isset($data->user_name)
 		//$usertype = mysqli_real_escape_string($db_conn, trim($data->user_type));
 		//$passCheck = mysqli_real_escape_string($db_conn, trim($data->password_check));
 
-
+		http_response_code(200);
 		$username = $data->user_name;
 		$useremail = $data->user_email;
 		$userpassword = $data->user_password;
@@ -49,13 +49,28 @@ if(isset($data->user_name)
 
 			$userInput = new user();
 			$result = $userInput->register($username, $usertype, $useremail, $passwordHash);
-      echo json_encode(["success"=>1,"msg"=>"User Inserted."]);
-			echo "HELLO! INSERT USER 2";
+			//echo $result;
+			//echo "HELLO! INSERT USER 2";
+			if($result == 1){
+				//Redirect Status code.
+				$returnData = [
+                        'success' => 1,
+                        'message' => 'You have Successfully Registered!'
+                    ];
+				echo json_encode($returnData);
+			}
+			else{
+
+				$returnData = $result;
+
+				echo json_encode($returnData);
+
+			}
     }
     else{
-        echo json_encode(["success"=>0,"msg"=>"Invalid Email Address!"]);
+        echo json_encode(["success"=>0,"message"=>"Oops. Your passwords don't match."]);
     }
 }
 else{
-    echo json_encode(["success"=>0,"msg"=>"Please fill all the required fields!"]);
+    echo json_encode(["success"=>0,"message"=>"Please fill all the required fields."]);
 }

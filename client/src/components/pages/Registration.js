@@ -1,119 +1,159 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Field, reduxForm } from 'redux-form';
-import {AppContext} from '../../context';
+/*
+<form onSubmit={submitForm} noValidate>
+<label>Create Username</label>
+<input name="username" required type="text" value={state.userInfo.user_name} placeholder ="Create Username"/>
+<label>Create Email</label>
+<input name="email" required type="email" value={state.userInfo.user_email} placeholder = "Email"/>
+<label>Select Type</label>
+<select onChange={onChangeValue} value={state.userInfo.user_type} placeholder = "Type of Member">
+     <option value="Single Volunteer or Volunteer Group">Single Volunteer or Volunteer Group</option>
+     <option value="Client or Client Group in Need">Client or Client Group In Need</option>
+</select>
+<label>Create Password</label>
+<input name="password" required type="password" value={state.userInfo.user_password} placeholder = "Create Password"/>
+<label>Confirm Password</label>
+<input name="passwordCheck" required type="password" value={state.userInfo.password_check} placeholder = "Confirm Password"/>
+  {errorMsg}
+  {successMsg}
+<button className="ui button primary">Submit</button>
+</form>
+*/
 
-import DropdownList from 'react-widgets/lib/DropdownList'
-import 'react-widgets/dist/css/react-widgets.css';
+
+import React, {useContext,useState} from 'react';
 import axios from 'axios';
+
+import {UserContext} from '../../contexts/UserContext';
+import DropdownList from 'react-widgets/lib/DropdownList';
+import 'react-widgets/dist/css/react-widgets.css';
+import AnimatedButton from '../subcomponents/AnimatedButton.js';
 
 const types = [ { type: 'Single Volunteer or Volunteer Group', value: '1' },
 { type: 'Client or Client Group in Need', value: '2' } ]
 
-
-class Registration extends React.Component {
-  static contextType = AppContext;
-
-  renderError({error, touched}){
-    if (touched && error){
-      return(
-        <div className = 'ui error message'>
-          <div className = "header">{error}</div>
-        </div>
-      );
+function Registration(){
+    const {toggleNav,registerUser} = useContext(UserContext);
+    const initialState = {
+        userInfo:{
+            username:'',
+            email:'',
+            password:'',
+            usertype:'Single Volunteer or Volunteer Group',
+            passwordcheck:'',
+        },
+        errorMsg:'',
+        successMsg:'',
     }
-  }
+    const [state,setState] = useState(initialState);
 
-  renderInput = ({ input, label, meta }) =>{
-    const className = `field ${meta.error && meta.touched ? 'error': ''}`;
+    // On Submit the Registration Form
+    const submitForm = async (event) => {
+        event.preventDefault();
+
+        const data = await registerUser(state.userInfo);
+
+        if(data.success){
+            console.log("Success, lets see the message");
+            console.log(data.message);
+            setState({
+                ...initialState,
+                successMsg:data.message,
+            });
+        }
+        else{
+          console.log("Lets see the failure");
+          console.log(data.message);
+            setState({
+                ...state,
+                successMsg:'',
+                errorMsg:data.message
+            });
+        }
+    }
+
+    // On change the Input Value (name, email, password...)
+    const onChangeValue = (e) => {
+      console.log(e.target);
+        console.log(e.target.value);
+        setState({
+            ...state,
+            userInfo:{
+                ...state.userInfo,
+                [e.target.name]:e.target.value
+            }
+        });
+
+    }
+
+
+
+    // Show Message on Success or Error
+    let successMsg = '';
+    let errorMsg = '';
+    if(state.errorMsg){
+        errorMsg = <div className="ui negative message">
+          <div className="header">{state.errorMsg}</div>
+          Make sure to check all fields throughly.
+        </div>;
+    }
+    if(state.successMsg){
+        successMsg = <div className="ui info message">
+          <div className="header">{state.successMsg}</div>
+          You may now login with the email you have chosen.
+        </div>;
+    }
+
     return(
-      <div className = {className}>
-      <label>{label}</label>
-      <input {...input} autoComplete = "off" />
-      {this.renderError(meta)}
+        <div className="ui container">
+          <h1 className = "ui center aligned huge header">
+            Glad to have you on board! Time to Register.
+            <div className="sub header">Please fill out the information below.</div>
+          </h1>
+          <div class="ui placeholder segment">
+            <div class="ui column very relaxed stackable grid">
+              <div class="middle aligned column">
+                  <form className= "ui form"onSubmit={submitForm} noValidate>
+                      <div className="field">
+                          <label>Create Username</label>
+                          <input name="username" required type="text" value={state.userInfo.username} onChange={onChangeValue} placeholder ="Create Username"/>
+                      </div>
+                      <div className="field">
+                          <label>Email Address</label>
+                          <input name="email" required type="email" value={state.userInfo.email} onChange={onChangeValue} placeholder="Enter your email"/>
+                      </div>
+                      <div className="field">
+                        <label>Type of Member</label>
+                      <select name="usertype" type="select" value={state.userInfo.usertype} onChange={onChangeValue} placeholder = "Type of Member">
+                           <option value="Single Volunteer or Volunteer Group">Single Volunteer or Volunteer Group</option>
+                           <option value="Client or Client Group in Need">Client or Client Group In Need</option>
+                      </select>
+                      </div>
+                      <div className="field">
+                          <label>Create Password</label>
+                          <input name="password" required type="password" value={state.userInfo.password} onChange={onChangeValue} placeholder="Enter your password"/>
+                      </div>
+                      <div className="field">
+                      <label>Confirm Password</label>
+                      <input name="passwordcheck" required type="password" value={state.userInfo.passwordcheck} onChange={onChangeValue} placeholder = "Confirm Password"/>
+                      </div>
+                      {errorMsg}
+                      {successMsg}
+                      <div className="form-control">
+                          <button className="ui button primary" type="submit">Sign Up</button>
+                      </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div className="_navBtn">
+                <button className="ui button" onClick={toggleNav}>
+                  <AnimatedButton
+                    message = "Back to Login"
+                    direction = "left"/>
+              </button>
+            </div>
       </div>
     );
-  }
-  renderDropdownList = ({ input, data, valueField, textField, label }) =>{
-  return(
-    <div className = 'field'>
-      <label>{label}</label>
-      <DropdownList {...input}
-        label = {label}
-        data= {data}
-        valueField={valueField}
-        textField={textField}
-        onChange={input.onChange} />
-      </div>
-    );
-  }
+}
 
-  onSubmit = (formValues) =>{
-    //console.log(formValues);
-    console.log(formValues.username);
-    console.log(formValues.email);
-    console.log(formValues.password);
-    console.log(formValues.type.type);
-    console.log(formValues.passwordCheck);
-
-    this.context.insertUser(formValues.username,
-      formValues.email,
-      formValues.password,
-      formValues.type.type,
-      formValues.passwordCheck);
-  }
-
-  render(){
-  return (
-    <div className="ui container">
-      <h1 className = "ui center aligned huge header">
-        Glad to have you on board! Time to Register.
-        <div className="sub header">Fill out the information below.</div>
-      </h1>
-      <form onSubmit={this.props.handleSubmit(this.onSubmit)} className = "ui form error">
-      <Field name="username" component={this.renderInput} label="Create Username"/>
-      <Field name="email" component={this.renderInput} label = "Email"/>
-      <Field
-          name="type"
-          component={this.renderDropdownList}
-          data={types}
-          valueField="value"
-          textField="type"
-          label = "Type of Member"/>
-      <Field name="password" component={this.renderInput} label = "Create Password"/>
-      <Field name="passwordCheck" component={this.renderInput} label = "Confirm Password"/>
-      <button className="ui button primary">Submit</button>
-      </form>
-    </div>
-  );
-  }
-};
-
-const validate = (formValues) =>{
-  const error = {};
-  if (!formValues.username) {
-    // only ran if the user did not enter a Username.
-    error.username = 'Username field is missing.';
-  }
-  if(!formValues.password){
-    error.password = "Password field is missing.";
-  }
-  if(!formValues.email){
-    error.email = "Email field is missing.";
-  }
-  if(formValues.password != formValues.passwordCheck){
-    error.passwordCheck = "Passwords do not match.";
-  }
-
-  return error;
-};
-
-//export default Registration;
-//Potentially using redux.
-//Due to Tawanda's expertise being stronger in Php, I will be using Php as the
-//End Point.
-
-export default reduxForm({
-  form: 'Registration',
-  validate: validate
-})(Registration);
+export default Registration;

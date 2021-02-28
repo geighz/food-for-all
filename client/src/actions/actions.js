@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import Axios from 'axios';
 class Actions extends React.Component{
     state = {
@@ -134,9 +134,9 @@ class Actions extends React.Component{
               console.log(error);
           });
       }
-
+*/
     // INSERT USER Test
-    /*
+/*
     insertUser = (user_name,user_email,user_password,user_type,password_check) => {
       Axios.post('http://localhost/food/insert-userTest.php',{
               user_name:user_name,
@@ -160,39 +160,46 @@ class Actions extends React.Component{
           });
       }
   }
-  */
-
-    insertUser = (user_name,user_email,user_password,user_type,password_check) => {
-          Axios.post('http://localhost/food/insert-user2.php',{
+*/
+  /*
+    insertUser = async (user_name,user_email,user_password,user_type,password_check) => {
+          const register = await Axios.post('http://localhost/food/insert-user2.php',{
               user_name:user_name,
               user_email:user_email,
               user_password:user_password,
               user_type:user_type,
               password_check:password_check
           })
-          .then(function ({data}) {
-              if(data.success === 1){
-                  this.setState({
-                      users:[
-                          {"id":data.id,
-                            "user_name":user_name,
-                            "user_email":user_email,
-                            "user_password":user_password,
-                            "user_type":user_type,
-                            "password_check":password_check},
-                          ...this.state.users
-                      ]
-                  });
-              }
-              else{
-                  alert(data.msg);
-              }
-          }.bind(this))
-          .catch(function (error) {
-              console.log(error);
-          });
-      }
-  }
 
+          return register.data;
+      }
+    */
+
+    /*
+    .then(function ({data}) => {
+        if(data.success === 1){
+            this.setState({
+                users:[
+                    {"id":data.id,
+                      "user_name":user_name,
+                      "user_email":user_email,
+                      "user_password":user_password,
+                      "user_type":user_type,
+                      "password_check":password_check},
+                    ...this.state.users
+                ]
+            });
+        }
+        else{
+            alert(data.msg);
+        }
+    }.bind(this))
+    .catch(function (error) {
+        console.log(error);
+    });
+    */
+
+/*
 
   export default Actions;
+*/
