@@ -1,15 +1,15 @@
 <?php
 
 //start a session
-if(!isset($_SESSION))
-    {
-        session_start();
-    }
+
 
 //turn off errors for the user's benefit
 //error_reporting(0);
 
 //include classes
+
+
+
 require_once "userclass.php";
 
 //connecting to the database

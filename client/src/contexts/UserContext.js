@@ -56,10 +56,11 @@ class UserContextProvider extends Component{
     loginUser = async (user) => {
 
         // Sending the user Login request
-
+        console.log(user.email);
+        console.log(user.password);
         const login = await Axios.post('login-user.php',{
-            user_email:user.email,
-            user_password:user.password
+            email:user.email,
+            password:user.password
         });
         console.log(login.data);
         console.log(typeof(login.data));
@@ -74,10 +75,10 @@ class UserContextProvider extends Component{
         if(loginToken){
 
             //Adding JWT token to axios default header
-            //Axios.defaults.headers.common['Authorization'] = 'bearer '+loginToken;
+            Axios.defaults.headers.common['Authorization'] = 'bearer '+loginToken;
 
             // Fetching the user information
-            const {data} = await Axios.get('get-user.php');
+            const {data} = await Axios.get('user-info.php');
 
 
             // If user information is successfully received

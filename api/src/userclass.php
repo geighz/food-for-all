@@ -78,20 +78,7 @@ function register ($name, $type, $email, $password)
     return $reg->execute();
   }
 }
-function getUser(){
-  if(isset($_SESSION)){
-    $this->setName($_SESSION['username']);
-    $this->setUserType($_SESSION['type']);
-    return 1;
-  }
-  else{
-    $returnData = [
-                    'success' => 0,
-                    'message' => 'User needs to re-login.'
-                ];
-    return $returnData;
-  }
-}
+
 //login method
 function login($email, $password) {
   require "config.php";
@@ -109,17 +96,10 @@ function login($email, $password) {
   //check if the password entered by the user corresponds to the password in the database
     if (password_verify($this->getPassword(), $obj->password)) {
     //if passwords match, it is safe to log the user in, therefore sessions can be set at this point
-      $_SESSION['id'] = $obj->id;
-      $_SESSION['username'] = $obj->username;
-      $_SESSION['email'] = $obj->email;
-      $_SESSION['type'] = $obj->type;
 
-      //Success.
-      $sId = $session_id();
       $returnData = [
                   'success' => 1,
-                  'message' => 'Successful Login!',
-                  'token' => $sId
+                  'message' => 'Successful Login!'
               ];
             return $returnData;
       }

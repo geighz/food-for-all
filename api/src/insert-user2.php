@@ -45,31 +45,41 @@ if(isset($data->user_name)
 
 //note, password has been hashed
 //filter_var($useremail, FILTER_VALIDATE_EMAIL)) && (
-    if ($passCheck == $userpassword) {
+	if(!filter_var($useremail, FILTER_VALIDATE_EMAIL)){
+		$returnData = [
+										'success' => 0,
+										'message' => 'Invalid Email Account!'
+								];
+			echo json_encode($returnData);
+		}
+	// IF PASSWORD IS LESS THAN 8 THE SHOW THE ERROR
+	elseif(strlen($userpassword) < 8){
+		$returnData = [
+										'success' => 0,
+										'message' => 'Your password must be at least 8 characters long!'
+								];
+			echo json_encode($returnData);
+		}
+	elseif ($passCheck == $userpassword) {
+				$userInput = new user();
+				$result = $userInput->register($username, $usertype, $useremail, $passwordHash);
 
-			$userInput = new user();
-			$result = $userInput->register($username, $usertype, $useremail, $passwordHash);
-			//echo $result;
-			//echo "HELLO! INSERT USER 2";
-			if($result == 1){
-				//Redirect Status code.
-				$returnData = [
-                        'success' => 1,
-                        'message' => 'You have Successfully Registered!'
-                    ];
-				echo json_encode($returnData);
-			}
-			else{
-
-				$returnData = $result;
-
-				echo json_encode($returnData);
-
-			}
-    }
-    else{
-        echo json_encode(["success"=>0,"message"=>"Oops. Your passwords don't match."]);
-    }
+				if($result == 1){
+					//Redirect Status code.
+					$returnData = [
+	                        'success' => 1,
+	                        'message' => 'You have Successfully Registered!'
+	                    ];
+					echo json_encode($returnData);
+				}
+				else{
+					$returnData = $result;
+					echo json_encode($returnData);
+				}
+	    }
+	    else{
+	        echo json_encode(["success"=>0,"message"=>"Oops. Your passwords don't match."]);
+	    }
 }
 else{
     echo json_encode(["success"=>0,"message"=>"Please fill all the required fields."]);
