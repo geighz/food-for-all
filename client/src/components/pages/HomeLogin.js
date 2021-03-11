@@ -28,29 +28,6 @@ const routes = {
 
 function HomeLogin (){
 
-/*
-  renderError({error, touched}){
-    if (touched && error){
-      return(
-        <div className = 'ui error message'>
-          <div className = "header">{error}</div>
-        </div>
-      );
-    }
-  }
-
-  renderInput = ({ input, label, meta }) =>{
-    const className = `field ${meta.error && meta.touched ? 'error': ''}`;
-    return(
-      <div className = {className}>
-      <label>{label}</label>
-      <input {...input} autoComplete = "off"/>
-      {this.renderError(meta)}
-      </div>
-    );
-  }
-  */
-
 const {toggleNav,loginUser,isLoggedIn} = useContext(UserContext);
 
     const initialState = {
@@ -152,29 +129,5 @@ const submitForm = async (event) => {
       </div>
       );
   }
-  /*
-  const validate = (formValues) =>{
-    const error = {};
-    if (!formValues.email) {
-      // only ran if the user did not enter a Username.
-      error.username = 'Email field is missing.';
-    }
 
-    if(!formValues.password){
-      error.password = "Password field is missing."
-    }
-
-    return error;
-  };
-  */
-
-  //Potentially using redux. export default HomeLogin;
-  //Due to Tawanda's expertise being stronger in Php, I will be using Php as the
-  //End Point.
-  /*
-export default reduxForm({
-  form: 'HomeLogin',
-  validate: validate
-})(HomeLogin);
-*/
 export default HomeLogin;

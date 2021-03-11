@@ -73,8 +73,6 @@ function Registration(){
 
     // On change the Input Value (name, email, password...)
     const onChangeValue = (e) => {
-      console.log(e.target);
-        console.log(e.target.value);
         setState({
             ...state,
             userInfo:{

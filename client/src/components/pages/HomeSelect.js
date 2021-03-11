@@ -1,5 +1,3 @@
-//<button onClick={logoutUser}>Logout</button>
-//{theUser.username}
 import React, {useContext} from 'react';
 import {UserContext} from '../../contexts/UserContext';
 
@@ -10,40 +8,28 @@ import Registration from './Registration';
 function HomeSelect(){
 
     const {rootState,logoutUser} = useContext(UserContext);
-    const {isAuth,theUser,showLogin} = rootState;
+    const {isAuth,theUser,showLogin,showShiftSelect} = rootState;
 
     // If user Logged in
     if(isAuth)
     {
         return(
-            <div className="ui container">
-                <div className = "ui secondary pointing menu">
-                  <a class="item">
-                    Home
-                  </a>
-                  <a class="item">
-                    Shifts
-                  </a>
-                  <a class="item">
-                    Positions
-                  </a>
-                </div>
-                <div className = "ui centered header">{theUser.username}</div>
-                <div class="ui segment">
-                <div class="ui two column very relaxed grid">
-                  <div class="column">
-                    <div className = "ui header">Left Header</div>
+          <div className = "ui container">
+            <div className = "ui centered header">{theUser.username}&#39;s Food For All-UK Dashboard</div>
+              <div className="ui segment">
+                <div className="ui two column very relaxed grid">
+                  <div className="column">
+                    <div className = "ui header">Current Positions</div>
                     <p>Left1</p>
                     <p>Left2</p>
                   </div>
-                  <div class="column">
-                    <div className = "ui header">Right Header</div>
+                  <div className="column">
+                    <div className = "ui header">Upcoming Shifts</div>
                     <p>Right1</p>
                     <p>Right2</p>
                   </div>
                 </div>
-                <div class="ui vertical divider">
-                </div>
+                <div className="ui vertical divider">And</div>
               </div>
             </div>
         )

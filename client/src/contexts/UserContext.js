@@ -29,6 +29,14 @@ class UserContextProvider extends Component{
         })
     }
 
+    toggleNavHome = () => {
+        const showLogin = !this.state.showLogin;
+        this.setState({
+            ...this.state,
+            showLogin
+        })
+    }
+
     // On Click the Log out button
     logoutUser = () => {
         localStorage.removeItem('loginToken');
@@ -54,16 +62,11 @@ class UserContextProvider extends Component{
 
 
     loginUser = async (user) => {
-
         // Sending the user Login request
-        console.log(user.email);
-        console.log(user.password);
         const login = await Axios.post('login-user.php',{
             email:user.email,
             password:user.password
         });
-        console.log(login.data);
-        console.log(typeof(login.data));
         return login.data;
     }
 
