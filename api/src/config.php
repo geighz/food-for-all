@@ -1,17 +1,8 @@
 <?php
 
-//start a session
-
-
-//turn off errors for the user's benefit
-//error_reporting(0);
-
-//include classes
-
-
 
 require_once "userclass.php";
-
+require_once "shiftsclass.php";
 //connecting to the database
 //credentials
 $dbn = "test";

@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Simple user table for testing*/
 CREATE TABLE `users` (
