@@ -1,74 +1,133 @@
+/*
+<form onSubmit={this.props.handleSubmit(this.onSubmit)} className = "ui form error">
+  <Field name="email" component={this.renderInput} label="Enter Email"/>
+  <Field name="password" component={this.renderInput} label = "Enter Password"/>
+  <button className="ui button primary">Submit</button>
+</form>
 
-import React from 'react';
-import { Link } from 'react-router-dom';
+<A href="/registration">
+  <AnimatedButton message ="Sign up!"/>
+</A>
+
+*/
+import React, {useContext, useState} from 'react';
+//import {AppContext} from '../../context';
+//import { Field, reduxForm } from 'redux-form';
+import {useRoutes, A} from 'hookrouter';
+import HomeSelect from './HomeSelect';
+import Registration from './Registration';
 import '../../css/HomeLogin.css';
-import { Field, reduxForm } from 'redux-form';
 import AnimatedButton from '../subcomponents/AnimatedButton.js';
+import {UserContext} from '../../contexts/UserContext';
 
-class HomeLogin extends React.Component{
-  renderError({error, touched}){
-    if (touched && error){
-      return(
-        <div className = 'ui error message'>
-          <div className = "header">{error}</div>
-        </div>
-      );
+const routes = {
+  "/": () => <HomeSelect />,
+  "/registration": () => <Registration />,
+  "/login": () => <HomeLogin />
+};
+
+function HomeLogin (){
+
+const {toggleNav,loginUser,isLoggedIn} = useContext(UserContext);
+
+    const initialState = {
+        userInfo:{
+            email:'',
+            password:'',
+        },
+        errorMsg:'',
+        successMsg:'',
     }
-  }
 
-  renderInput = ({ input, label, meta }) =>{
-    const className = `field ${meta.error && meta.touched ? 'error': ''}`;
-    return(
-      <div className = {className}>
-      <label>{label}</label>
-      <input {...input} autoComplete = "off"/>
-      {this.renderError(meta)}
-      </div>
-    );
-  }
-onSubmit(formValues){
-  console.log(formValues);
-}
-  render(){
+    const [state,setState] = useState(initialState);
+
+
+const submitForm = async (event) => {
+        event.preventDefault();
+        const data = await loginUser(state.userInfo);
+        if(data.success && data.token){
+            setState({
+                ...initialState,
+            });
+            localStorage.setItem('loginToken', data.token);
+            await isLoggedIn();
+        }
+        else{
+            setState({
+                ...state,
+                successMsg:'',
+                errorMsg:data.message
+            });
+        }
+    }
+
+    // On change input value (email & password)
+    const onChangeValue = (e) => {
+        setState({
+            ...state,
+            userInfo:{
+                ...state.userInfo,
+                [e.target.name]:e.target.value
+            }
+        });
+    }
+    // Show Message on Error or Success
+    let successMsg = '';
+    let errorMsg = '';
+    if(state.errorMsg){
+        errorMsg = <div className="error-msg">{state.errorMsg}</div>;
+    }
+    if(state.successMsg){
+        successMsg = <div className="success-msg">{state.successMsg}</div>;
+    }
+
+
     return(
       <div className="ui container">
         <h1 className = "ui center aligned huge header">
-          Welcome to the Food For All UK work space.
+          Welcome to the Food For All-UK Work Space.
           <div className="sub header">Please Log in Below.</div>
         </h1>
-
-        <form onSubmit={this.props.handleSubmit(this.onSubmit)} className = "ui form error">
-          <Field name="username" component={this.renderInput} label="Enter Username"/>
-          <Field name="password" component={this.renderInput} label = "Enter Password"/>
-          <button className="ui button primary"> Submit</button>
-        </form>
+        <div class="ui placeholder segment">
+          <div class="ui column very relaxed stackable grid">
+            <div class="middle aligned column">
+              <form  className = "ui form" onSubmit={submitForm} noValidate>
+                <div className="field">
+                    <label>Email: </label>
+                    <div className="ui left icon input">
+                    <input name="email" type="email" required placeholder="Enter your email" value={state.userInfo.email} onChange={onChangeValue} />
+                    <i class="user icon"></i>
+                    </div>
+                </div>
+                <div className="field">
+                      <label>Password:</label>
+                      <div className="ui left icon input">
+                        <input name="password" type="password" required placeholder="Enter your password" value={state.userInfo.password} onChange={onChangeValue} />
+                        <i class="lock icon"></i>
+                      </div>
+                </div>
+                {errorMsg}
+                {successMsg}
+                <div className="form-control">
+                    <button className="ui button primary" type="submit">Login</button>
+                </div>
+            </form>
+          </div>
+          </div>
+          </div>
         <h2 className = "ui center aligned big header">
           New Volunteer? Register Here.
-          <Link to = "/registration" className="item">
-            <AnimatedButton message ="Sign up!"/>
-          </Link>
-        </h2>
+
+          <div className="middle aligned column">
+                <button className="ui button" onClick={toggleNav}>
+                  <AnimatedButton
+                    message = "Sign Up !"
+                    direction = "right"/>
+                </button>
+            </div>
+          </h2>
       </div>
       );
-    }
   }
 
-  const validate = (formValues) =>{
-    const error = {};
-    if (!formValues.username) {
-      // only ran if the user did not enter a Username.
-      error.username = 'Username field is missing.';
-    }
-
-    if(!formValues.password){
-      error.password = "Password field is missing."
-    }
-
-    return error;
-  };
-
-
-export default reduxForm({
-  form: 'HomeLogin',
-  validate: validate
-})(HomeLogin);
+export default HomeLogin;
