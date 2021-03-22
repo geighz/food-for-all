@@ -7,6 +7,30 @@ import Registration from './Registration';
 
 import Accordion from '../subcomponents/Accordion';
 
+const positions = [
+  {
+    title: 'HR Manager',
+    content: 'In charge of being an Hr For people.',
+    moreContent: 'Test to see how much I can put in.'
+  },
+];
+
+const shifts = [
+  {
+    title: 'Packing Food',
+    content: 'React is a front end javascript framework',
+    moreContent: '12:00 Am to 1:00 PM'
+  },
+  {
+    title: 'Delivering Food',
+    content: 'React is a favorite JS library among engineers'
+  },
+  {
+    title: 'Packing equipment for Volunteers',
+    content: 'You use React by creating components'
+  }
+];
+
 function HomeSelect(){
 
     const {rootState,logoutUser} = useContext(UserContext);
@@ -22,16 +46,14 @@ function HomeSelect(){
                 <div className="ui two column very relaxed grid">
                   <div className="column">
                     <div className = "ui header">Current Positions</div>
-                        <p>AccordionLeft1</p>
-                        <p>AccordionLeft2</p>
+                        <Accordion items={positions} />
                   </div>
                   <div className="column">
                     <div className = "ui header">Upcoming Shifts</div>
-                    <p>AccordionRight1</p>
-                    <p>AccordionRight2</p>
+                      <Accordion items={shifts} />
                   </div>
                 </div>
-                <div className="ui vertical divider">And</div>
+                <div className="ui vertical divider">AND</div>
               </div>
             </div>
         )
