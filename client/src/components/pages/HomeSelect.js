@@ -5,6 +5,8 @@ import {UserContext} from '../../contexts/UserContext';
 import HomeLogin from './HomeLogin';
 import Registration from './Registration';
 
+import Accordion from '../subcomponents/Accordion';
+
 function HomeSelect(){
 
     const {rootState,logoutUser} = useContext(UserContext);
@@ -20,13 +22,13 @@ function HomeSelect(){
                 <div className="ui two column very relaxed grid">
                   <div className="column">
                     <div className = "ui header">Current Positions</div>
-                    <p>Left1</p>
-                    <p>Left2</p>
+                        <p>AccordionLeft1</p>
+                        <p>AccordionLeft2</p>
                   </div>
                   <div className="column">
                     <div className = "ui header">Upcoming Shifts</div>
-                    <p>Right1</p>
-                    <p>Right2</p>
+                    <p>AccordionRight1</p>
+                    <p>AccordionRight2</p>
                   </div>
                 </div>
                 <div className="ui vertical divider">And</div>
