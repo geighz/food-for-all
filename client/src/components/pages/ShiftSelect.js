@@ -1,5 +1,5 @@
 //<div>{theUser.email}</div>
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect, useRef} from 'react';
 import {UserContext} from '../../contexts/UserContext';
 
 // Importing the Login & Register Component
@@ -7,8 +7,9 @@ import HomeLogin from './HomeLogin';
 import Registration from './Registration';
 import DatePicker from 'react-date-picker';
 import Accordion from '../subcomponents/Accordion';
+import VirtualizedList from '../subcomponents/VirtualizedList';
 
-const shifts = [
+const requests = [
   {
     title: 'Packing Food',
     content: 'React is a front end javascript framework',
@@ -29,10 +30,15 @@ function ShiftSelect(){
     const {rootState,logoutUser} = useContext(UserContext);
     const {isAuth,theUser,showLogin,showShiftSelect} = rootState;
     const [value, onChange] = useState(new Date());
+    const [shifts, setShifts] = useState([]);
 
+    const addShifts = () => {
+      setShifts(s => [...s, " tacos "]);
+    };
     // If user Logged in
     if(isAuth)
     {
+
         return(
             <div className="ui container">
                 <div className="ui small header"> Date Selected: </div>
@@ -41,11 +47,18 @@ function ShiftSelect(){
                   value={value}
                 />
                 <div className="ui small header"> Requested unconfirmed Shifts: </div>
-                <div class="ui grid">
-                  <div class="four wide column">
-                    <Accordion items={shifts} />
+                <div className="ui grid">
+                  <div className="three wide column">
+                    <Accordion items={requests} />
+                    <button className="addButton" onClick={addShifts}>
+                    Add Shift
+                    </button>
+                  </div>
+                  <div className = "six wide column">
+                  <VirtualizedList />
                   </div>
                 </div>
+
             </div>
         )
     }
