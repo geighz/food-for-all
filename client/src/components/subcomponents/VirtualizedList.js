@@ -10,21 +10,32 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: 300,
     maxWidth: 1000,
-    backgroundColor: theme.palette.background.paper,
+
   },
 }));
 
-function renderRow(props) {
+
+function RenderRow(props) {
   const { index, style } = props;
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  const handleChange = (index) => {
+  console.log(index);
+  setActiveIndex(index);
+
+  return(
+    <div>{activeIndex}</div>
+  );
+  };
 
   return (
-    <ListItem button style={style} key={index}>
-      <ListItemText primary={`Shift ${index + 1}`} />
+    <ListItem button onClick={() => handleChange(index)} style={style} key={index} >
+      <ListItemText primary={`Shift ${index}`} />
     </ListItem>
   );
 }
 
-renderRow.propTypes = {
+RenderRow.propTypes = {
   index: PropTypes.number.isRequired,
   style: PropTypes.object.isRequired,
 };
@@ -34,8 +45,8 @@ export default function VirtualizedList() {
 
   return (
     <div className={classes.root}>
-      <FixedSizeList height={200} width={850} itemSize={46} itemCount={200}>
-        {renderRow}
+      <FixedSizeList height={300} width={400} itemSize={46} itemCount={200}>
+        {RenderRow}
       </FixedSizeList>
     </div>
   );
