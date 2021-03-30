@@ -40,7 +40,7 @@ RenderRow.propTypes = {
   style: PropTypes.object.isRequired,
 };
 
-export default function VirtualizedList() {
+export default function VirtualizedList(props) {
   const classes = useStyles();
 
   return (
