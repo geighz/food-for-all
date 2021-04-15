@@ -42,7 +42,7 @@ RenderRow.propTypes = {
 
 export default function VirtualizedList(props) {
   const classes = useStyles();
-
+  console.log(props.selectedDate);
   return (
     <div className={classes.root}>
       <FixedSizeList height={300} width={400} itemSize={46} itemCount={200}>

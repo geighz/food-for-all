@@ -65,6 +65,7 @@ function ShiftSelect(){
                 <DatePicker
                     selected={date}
                     onChange={handleChange}
+                    minDate={new Date()}
                 />
                 <div class="ui placeholder segment">
 
@@ -77,8 +78,9 @@ function ShiftSelect(){
                       <div className="ui small header">
                       Available shifts for: {date.getMonth() + 1}/
                       {date.getDate()}/
-                      {date.getFullYear()}</div>
-                      <VirtualizedList />
+                      {date.getFullYear()} -
+                      {date.getUTCHours()}</div>
+                      <VirtualizedList selectedDate = {date} />
                     </div>
                     <div className ="two wide column">
                       <div className="ui small header"> Selected Shift: </div>
