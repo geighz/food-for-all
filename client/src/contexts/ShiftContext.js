@@ -29,6 +29,17 @@ class ShiftContextProvider extends Component{
         return login.data;
     }
 
+    showDateShifts = async (date) =>{
+      const shifts = await Axios.get('show-date-shifts.php',{
+            date_day:date.getDate(),
+            date_month:date.getDate(),
+            date_year:date.getFullYear(),
+            date_time:date.getUTCHours()
+        });
+
+        return shifts.data;
+    }
+
 
     }
 

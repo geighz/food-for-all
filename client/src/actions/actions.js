@@ -1,11 +1,27 @@
 import React from 'react';
 import Axios from 'axios';
-class Actions extends React.Component{
+
+
+  const showDateShifts = async (date) => {
+    const shifts = await Axios.post('http://localhost/food/show-date-shifts.php',{
+          date_day:date.getDate(),
+          date_month:date.getMonth(),
+          date_year:date.getFullYear(),
+          date_time:date.getUTCHours()
+      });
+
+      return shifts.data;
+  }
+
+  export {showDateShifts};
+
 
   /*
     state = {
         users:[]
     }
+
+
 
     // FETCH USERS FROM DATABASE
     fetchUsers = () => {
@@ -176,7 +192,7 @@ class Actions extends React.Component{
           return register.data;
       }
     */
-  
+
 
     /*
     .then(function ({data}) => {
@@ -201,7 +217,3 @@ class Actions extends React.Component{
         console.log(error);
     });
     */
-
-}
-
-  export default Actions;

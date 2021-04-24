@@ -49,7 +49,7 @@ $sql->execute();
 $this->data = $sql->fetchObject();
 }
 
-public function allDayShifts(date) {
+public function allDayShifts($date) {
 require "config.php";
 
 $sql = $conn->prepare("SELECT * FROM shifts WHERE time_start= :date");
@@ -59,16 +59,6 @@ $sql->execute();
 $this->data = $sql->fetchAll(PDO::FETCH_ASSOC);
 }
 
-//Only show one shift. This will be useful when we only want to display one shift on a page.
-public function showShift($id) {
-require "config.php";
-
-$sql = $conn->prepare("SELECT * FROM shifts WHERE id = :id");
-$sql->bindParam(":id", $id);
-$sql->execute();
-
-$this->data = $sql->fetchObject();
-}
 
 //Show all the shifts a volunteer has been approved to do.
 //after it has been decided if users will be identified by name or email, there will be an additional where clause to only show shifts that correspond to that user.

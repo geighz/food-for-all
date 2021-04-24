@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
-import Actions from '../../actions/actions.js';
+import {showDateShifts} from '../../actions/actions.js';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -43,11 +43,13 @@ RenderRow.propTypes = {
 export default function VirtualizedList(props) {
   const classes = useStyles();
   const {setActiveIndex} = props;
-  const {} = ;
+  const {selectedDate} = props;
+
+  useEffect(() => {
+    const data = showDateShifts(selectedDate);
+   }, [selectedDate]);
+
   //console.log(props.selectedDate);
-
-
-
 
 
   const RenderRow = (props:ListChildComponentProps) => {
