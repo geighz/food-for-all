@@ -1,6 +1,8 @@
-/*import React from 'react';
+import React from 'react';
 import Axios from 'axios';
 class Actions extends React.Component{
+
+  /*
     state = {
         users:[]
     }
@@ -174,6 +176,7 @@ class Actions extends React.Component{
           return register.data;
       }
     */
+  
 
     /*
     .then(function ({data}) => {
@@ -199,7 +202,6 @@ class Actions extends React.Component{
     });
     */
 
-/*
+}
 
   export default Actions;
-*/

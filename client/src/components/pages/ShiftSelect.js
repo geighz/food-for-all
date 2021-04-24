@@ -35,11 +35,11 @@ function ShiftSelect(){
     const {rootState,logoutUser} = useContext(UserContext);
     const {isAuth,theUser,showLogin,showShiftSelect} = rootState;
     //ShiftContext goes here.
+
     const [date, setDate] = useState(new Date());
-
-
-
+    const [activeIndex, setActiveIndex] = useState("");
     const [shifts, setShifts] = useState([]);
+    console.log({activeIndex});
 
     const addShifts = () => {
       setShifts(s => [...s, " tacos "]);
@@ -47,9 +47,6 @@ function ShiftSelect(){
 
     const handleChange = date =>{
       console.log(date);
-      var keys = Object.keys(date);
-      console.log(typeof(date));
-      console.log(keys);
       setDate(date);
       console.log(date.getDate())
      };
@@ -80,7 +77,10 @@ function ShiftSelect(){
                       {date.getDate()}/
                       {date.getFullYear()} -
                       {date.getUTCHours()}</div>
-                      <VirtualizedList selectedDate = {date} />
+                      <VirtualizedList
+                      selectedDate = {date}
+                      setActiveIndex={setActiveIndex}
+                      />
                     </div>
                     <div className ="two wide column">
                       <div className="ui small header"> Selected Shift: </div>

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import { FixedSizeList } from 'react-window';
-
+import { FixedSizeList, ListChildComponentProps } from 'react-window';
+import Actions from '../../actions/actions.js';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -14,18 +14,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-function RenderRow(props) {
+/*
+const RenderRow = (props:ListChildComponentProps) => {
   const { index, style } = props;
-  const [activeIndex, setActiveIndex] = useState(null);
 
+  console.log(props);
   const handleChange = (index) => {
-  console.log(index);
-  setActiveIndex(index);
+    //setActiveIndex(index);
 
-  return(
-    <div>{activeIndex}</div>
-  );
   };
 
   return (
@@ -34,18 +30,45 @@ function RenderRow(props) {
     </ListItem>
   );
 }
-
+*
+/*
 RenderRow.propTypes = {
   index: PropTypes.number.isRequired,
   style: PropTypes.object.isRequired,
+  //setActiveIndex: PropTypes.func.isRequired,
+
 };
+*/
 
 export default function VirtualizedList(props) {
   const classes = useStyles();
-  console.log(props.selectedDate);
+  const {setActiveIndex} = props;
+  const {} = ;
+  //console.log(props.selectedDate);
+
+
+
+
+
+  const RenderRow = (props:ListChildComponentProps) => {
+    const { index, style } = props;
+
+
+    const handleChange = (index) => {
+      setActiveIndex(index);
+
+    };
+
+    return (
+      <ListItem button onClick={() => handleChange(index)} style={style} key={index} >
+        <ListItemText primary={`Shift ${index}`} />
+      </ListItem>
+    );
+  }
+
   return (
     <div className={classes.root}>
-      <FixedSizeList height={300} width={400} itemSize={46} itemCount={200}>
+      <FixedSizeList height={300} width={400} itemSize={46} itemCount={100}>
         {RenderRow}
       </FixedSizeList>
     </div>

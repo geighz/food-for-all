@@ -49,10 +49,11 @@ $sql->execute();
 $this->data = $sql->fetchObject();
 }
 
-public function allDayShifts(day) {
+public function allDayShifts(date) {
 require "config.php";
 
-$sql = $conn->prepare("SELECT * FROM shifts");
+$sql = $conn->prepare("SELECT * FROM shifts WHERE time_start= :date");
+$sql->bindParam(":date", $date);
 $sql->execute();
 
 $this->data = $sql->fetchAll(PDO::FETCH_ASSOC);

@@ -35,7 +35,8 @@ class ShiftContextProvider extends Component{
     render(){
         const contextValue = {
             rootState:this.state,
-            loginUser:this.loginUser
+            loginUser:this.loginUser,
+            currentShifts:this.currentShifts
         }
         return(
             <ShiftContext.Provider value={contextValue}>
