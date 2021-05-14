@@ -1,13 +1,14 @@
 import React from 'react';
 import Axios from 'axios';
-
-
+/*
+date_day:date.getDate(),
+date_month:date.getMonth(),
+date_year:date.getFullYear(),
+date_time:date.getUTCHours()
+*/
   const showDateShifts = async (date) => {
     const shifts = await Axios.post('http://localhost/food/show-date-shifts.php',{
-          date_day:date.getDate(),
-          date_month:date.getMonth(),
-          date_year:date.getFullYear(),
-          date_time:date.getUTCHours()
+        date:date
       });
 
       return shifts.data;

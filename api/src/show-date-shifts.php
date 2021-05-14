@@ -11,7 +11,28 @@ require_once "config.php";
 
 //as recommended in the shifts.php script, the id should be carried in a hidden field or session so when we get here we can have something like
 //$id = $_POST['id'];
-$data = json_decode(file_get_contents("php://input"));
+//$data = json_decode(file_get_contents("php://input"));
+$data = file_get_contents("php://input");
+//$importedDate = file_get_contents("php://input")
+//echo json_encode($data);
 
-echo json_encode($data);
-echo "Return whatever";
+//Theres an awkward shift in the date for some reason.
+$shift = 13;
+$date = substr($data, $shift, strpos($data, '(') - $shift);
+echo $date;
+
+$dateMod = new DateTime($date);
+
+$newDate = $dateMod->format('Y-m-d H:i:s');
+echo $newDate;
+
+
+$output = new shifts();
+
+$output->allDayShifts($newDate);
+if ($output) {
+  echo json_encode($output->data);
+}
+else {
+echo "oops";
+}

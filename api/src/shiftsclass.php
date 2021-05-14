@@ -52,7 +52,7 @@ $this->data = $sql->fetchObject();
 public function allDayShifts($date) {
 require "config.php";
 
-$sql = $conn->prepare("SELECT * FROM shifts WHERE time_start= :date");
+$sql = $conn->prepare("SELECT * FROM shifts WHERE time_start > :date");
 $sql->bindParam(":date", $date);
 $sql->execute();
 

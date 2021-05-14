@@ -46,7 +46,8 @@ export default function VirtualizedList(props) {
   const {selectedDate} = props;
 
   useEffect(() => {
-    const data = showDateShifts(selectedDate);
+    const stringDate = selectedDate.toString();
+    const data = showDateShifts(stringDate);
    }, [selectedDate]);
 
   //console.log(props.selectedDate);
@@ -58,7 +59,6 @@ export default function VirtualizedList(props) {
 
     const handleChange = (index) => {
       setActiveIndex(index);
-
     };
 
     return (
