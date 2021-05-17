@@ -10,7 +10,7 @@ date_time:date.getUTCHours()
     const shifts = await Axios.post('http://localhost/food/show-date-shifts.php',{
         date:date
       });
-
+      console.log(shifts);
       return shifts.data;
   }
 

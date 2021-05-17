@@ -37,9 +37,9 @@ function ShiftSelect(){
     //ShiftContext goes here.
 
     const [date, setDate] = useState(new Date());
-    const [activeIndex, setActiveIndex] = useState("");
+    const [activeItem, setActiveItem] = useState({});
     const [shifts, setShifts] = useState([]);
-    console.log({activeIndex});
+    console.log({activeItem});
 
     const addShifts = () => {
       setShifts(s => [...s, " tacos "]);
@@ -79,7 +79,7 @@ function ShiftSelect(){
                       {date.getUTCHours()}</div>
                       <VirtualizedList
                       selectedDate = {date}
-                      setActiveIndex={setActiveIndex}
+                      setActiveItem={setActiveItem}
                       />
                     </div>
                     <div className ="two wide column">

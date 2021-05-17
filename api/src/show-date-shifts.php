@@ -19,12 +19,10 @@ $data = file_get_contents("php://input");
 //Theres an awkward shift in the date for some reason.
 $shift = 13;
 $date = substr($data, $shift, strpos($data, '(') - $shift);
-echo $date;
 
 $dateMod = new DateTime($date);
 
 $newDate = $dateMod->format('Y-m-d H:i:s');
-echo $newDate;
 
 
 $output = new shifts();

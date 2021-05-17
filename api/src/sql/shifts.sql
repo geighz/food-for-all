@@ -29,7 +29,7 @@ INSERT INTO `shifts`(`title`, `summary`, `shift`, `type`, `location`, `admin`,
   `status`, `volunteer_max`, `volunteer_current`, `time_start`, `time_end`)
   VALUES ("Title","This is a Test Shift summary","Shift column?",
     "I'm not sure why type is here.","2121 Main Street 68589","Lawrence","Full",
-  10,5,CAST(N'2012-05-21 09:30:00.000' AS DateTime),
-  CAST(N'2021-06-21 10:30:00.000' AS DateTime))
+  10,5,CAST(N'2021-05-21 09:30:00.000' AS DateTime),
+  CAST(N'2021-05-21 10:30:00.000' AS DateTime))
 
   */
