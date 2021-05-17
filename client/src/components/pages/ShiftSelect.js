@@ -84,7 +84,7 @@ function ShiftSelect(){
                     </div>
                     <div className ="two wide column">
                       <div className="ui small header"> Selected Shift: </div>
-                      <SimpleCard />
+                      <SimpleCard shift = {activeItem} />
                     </div>
                     </div>
                 </div>

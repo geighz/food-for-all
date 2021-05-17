@@ -103,7 +103,7 @@ const submitForm = async (event) => {
                       <label>Password:</label>
                       <div className="ui left icon input">
                         <input name="password" type="password" required placeholder="Enter your password" value={state.userInfo.password} onChange={onChangeValue} />
-                        <i class="lock icon"></i>
+                        <i className="lock icon"></i>
                       </div>
                 </div>
                 {errorMsg}

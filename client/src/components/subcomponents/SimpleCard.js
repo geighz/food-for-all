@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -25,32 +25,37 @@ const useStyles = makeStyles({
 
 export default function SimpleCard(props) {
   const classes = useStyles();
-  
-  const bull = <span className={classes.bullet}>•</span>;
+  const { shift } = props;
+  const [card, setCard] = useState({});
 
+  useEffect(() => {
+    setCard(shift);
+
+  }, [shift]);
+
+  console.log(card.title);
+  const bull = <span className={classes.bullet}>•</span>;
   return (
     <Card className={classes.root}>
       <CardContent>
         <Typography className={classes.title} variant="h5" component="h2" color="textSecondary" gutterBottom>
-          Food Packaging (Type)
+        {card.type}
         </Typography>
         <Typography variant="h5" component="h2">
-          Food Packaging
+          {card.title}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          West Avenue Drive, 1931, 83283 London
+          {card.location}
         </Typography>
         <Typography variant="body2" component="p">
-          Short Description of what Food Packaging is...packaging
-          food for clients and or volunteers: Should be fun!
-          But what do I know? I am just simply testing the functionality
-          of this card here, and checking to see if the volunteer can understand
-          this well.
+          {card.summary}
           <br />
-          {'10/25/2021 (10:00 AM - 11:00 AM)'}
+          Start: {card.time_start}
+          <br />
+          End: {card.time_end}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          Coordinator: John Doe - JDoe@food.com
+          Coordinator: {card.admin}
         </Typography>
       </CardContent>
       <CardActions>
