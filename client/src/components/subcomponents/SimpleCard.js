@@ -30,7 +30,6 @@ export default function SimpleCard(props) {
 
   useEffect(() => {
     setCard(shift);
-
   }, [shift]);
 
   console.log(card.title);
