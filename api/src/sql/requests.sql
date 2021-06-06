@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `requests` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `shift_id` int(11) NOT NULL,
-  `approved` varchar(40) NOT NULL,
+  `approved` varchar(40) NOT NULL DEFAULT 'false',
   PRIMARY KEY (`id`),
   KEY `shifts.id` (`shift_id`) USING BTREE
   KEY `users.id` (`user_id`) USING BTREE
@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS `requests` (
 ALTER TABLE `requests`
   ADD CONSTRAINT `shifts.id` FOREIGN KEY (`shift_id`) REFERENCES `shifts` (`id`);
   ADD CONSTRAINT `users.id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

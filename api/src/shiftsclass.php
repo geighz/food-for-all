@@ -73,16 +73,31 @@ $this->data = $sql->fetchAll(PDO::FETCH_ASSOC);
 }
 
 //allow volunteers to note their interest in working on a shift
-public function request($vol, $email, $shift, $approved) {
+public function request($vol, $userid, $shiftid) {
 require "config.php";
 
-$sql = $conn->prepare("INSERT INTO requests (volunteer, email, shift_id, approved)
-VALUES (:vol, :email, :shift, :appr)");
+//check if a user has already requested this shift
+$check = $conn->prepare("SELECT * FROM requests WHERE user_id = :user AND shift_id = :shift");
+$check->bindParam(":user", $userid);
+$check->bindParam(":shift", $shiftid);
 
+$check->execute();
+$obj = $check->fetchObject();
+
+//if the request has already been made
+if ($obj) {
+echo "Oops. You already requested that shift";
+}
+//if the request has not yet been made, create request
+else {
+$sql = $conn->prepare("INSERT INTO requests (volunteer, user_id, shift_id, request_time)
+VALUES (:vol, :user, :shift, :requesttime)");
+
+$datetime = date("d/M/Y h:i:s");
+$sql->bindParam(":requesttime", $datetime);
 $sql->bindParam(":vol", $vol);
-$sql->bindParam(":email", $email);
-$sql->bindParam(":shift", $shift);
-$sql->bindParam(":appr", $approved);
+$sql->bindParam(":user", $userid);
+$sql->bindParam(":shift", $shiftid);
 
 $exec = $sql->execute();
 if ($exec) {
@@ -90,6 +105,7 @@ echo "success";
 }
 else {
 echo "oops";
+}
 }
 }
 
